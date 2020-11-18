@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Bree+Serif|Poppins&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="screen and (max-width:1080px)" href="css/phone.css">
+	<title>Online Food</title>
+</head>
+<body id="body1">
+<nav id="navBar">
+		<div id="logo">	
+			<img src="images/logo.png" alt="OnlineFood.com">
+		</div>
+		<ul>
+			<li class="item">
+				<a href="index.html">Home</a>
+			</li>
+			<li class="item">
+				<a href="about.html">About</a>
+			</li>
+			<li class="item">
+				<a href="services.html">Services</a>
+			</li>
+			<li class="item">
+				<a href="food.html">Food</a>
+			</li>
+			<li class="item">
+				<a href="#contact">Contact us</a>
+			</li>
+		</ul>
+	</nav>
+
+	<div class="card">
+	<h1 class="h-primary center">Contact Us</h1>
+		<div id="contact-box">
+			<form>
+				<div class="form-group">
+					<label for="name">Name:</label>
+					<input type="text" name="name" id="name" placeholder="Your Name">
+				</div>
+				<div class="form-group">
+					<label for="email">Email:</label>
+					<input type="email" name="email" id="email" placeholder="Your Email">
+				</div>
+				<div class="form-group">
+					<label for="phone">Phone No.:</label>
+					<input type="tel" name="phone" id="phone" placeholder="Your Phone No" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+				</div>
+				<div class="form-group">
+					<label for="message">Message:</label>
+					<textarea name="message"></textarea>
+				</div>
+				<input class="btn" type="submit" name="submiButton" value="Submit">
+			</form>
+		</div>
+	</div>	
+</body>
+</html>
