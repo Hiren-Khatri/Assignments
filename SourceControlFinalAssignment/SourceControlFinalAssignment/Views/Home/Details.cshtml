@@ -1,0 +1,70 @@
+﻿@model SourceControlFinalAssignment.Models.User
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<div>
+    <br />
+    <br />
+    <h4>
+        Welcome  @Html.DisplayFor(model => model.UserName)
+    </h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <div class="row">
+            <div class="col-md-6">
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+
+                <br />
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserEmail)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UserEmail)
+                </dd>
+                <br />
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserPhone)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UserPhone)
+                </dd>
+                <br />
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserBirthDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UserBirthDate)
+                </dd>
+            </div>
+            <div class="col-md-6">
+                @if (Model.UserImage != null)
+                {
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserImage)
+                    </dt>
+
+                    <dd>
+                        @*@Html.DisplayFor(model => model.UserImage)*@
+                        <img src="@Url.Content(Model.UserImage)" alt="@Model.UserName" style="height: 150px; width: 150px;border: 2px solid #337ab7;  border-radius: 8px"/>
+                    </dd>
+                }
+            </div>
+        </div>
+    </dl>
+</div>
+
+<input type="button" value="Edit Profile" onclick="location.href='@Url.Action("Edit", new { id = Model.UserID })'" class="btn btn-primary"/>
