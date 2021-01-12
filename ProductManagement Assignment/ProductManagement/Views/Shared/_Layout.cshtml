@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link href="~/Content/alertifyjs/alertify.min.css" rel="stylesheet" />
+    <link href="~/Content/alertifyjs/themes/default.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        td.details-control {
+            background: url('https://datatables.net/examples/resources/details_open.png') no-repeat center center;
+            cursor: pointer;
+        }
+
+        tr.shown td.details-control {
+            background: url('https://datatables.net/examples/resources/details_close.png') no-repeat center center;
+        }
+    </style>
+</head>
+<body>
+    <!--BEGIN Top Navigation Bar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="margin:0px 2px;border-radius:4px">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                @Html.ActionLink("Product Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <!-- If User is LoggedIn Shows Username And Logout Link-->
+                @if (Session["Username"] != null)
+                {
+                    <ul class="nav">
+                        <li class="nav-item">@Html.ActionLink(Session["Username"].ToString(), "Index", "Home", routeValues: null, htmlAttributes: new { @class = "text-light nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Log Off", "Logout", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "text-light nav-link" })</li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </nav>
+    <!--END Top Navigation Bar-->
+
+    <div class="container-fluid" style="margin-top:10px;">
+        <div class="row h-100 ">
+            <!--Shows Left Sidebar Menu if User is Logged In-->
+            @if (Session["Username"] != null)
+            {
+                <!-- BEGIN Sidebar menu left Side-->
+                <nav class="col-sm-2 bg-light sidebar-sticky" style="margin-top:20px;">
+                    <div class="sidebar-sticky">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" active href="@Url.Action("Index","Home")">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" active href="@Url.Action("Index","Product")">Product List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("AddOrEdit","Product")">Add Product</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index","ProductCategory")">Product Category List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("AddOrEdit","ProductCategory")">Add Product Category</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <!-- END Sidebar menu left Side-->
+            }
+            <!-- BEGIN Main Body Section-->
+            <div class="container body-content col-sm-10 px-4" role="main">
+                <!--Shows Current Page Details-->
+                @RenderBody()
+                <hr />
+                <!--BEGIN Footer-->
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - Product Management - Hiren Khatri</p>
+                </footer>
+                <!--END Footer-->
+            </div>
+            <!-- END Main Body Section-->
+        </div>
+    </div>
+    <!--BEGIN Script Section -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/alertify.min.js"></script>
+    <script src="~/Scripts/Script.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+    @RenderSection("scripts", required: false)
+    <!--END Script Section -->
+</body>
+</html>

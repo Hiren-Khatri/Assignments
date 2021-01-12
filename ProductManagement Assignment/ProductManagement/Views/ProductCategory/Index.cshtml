@@ -1,0 +1,88 @@
+﻿@model IEnumerable<ProductManagement.Models.MvcProductCategoryModel>
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Product Categories</h2>
+<!-- Button To Go To Add Page Product Category Page-->
+<p>
+    <a href="@Url.Action("AddOrEdit","ProductCategory")" class="btn btn-outline-primary"><i class="far fa-plus"></i> Add Product Category</a>
+</p>
+
+<!-- BEGIN Product Category List Table-->
+<table class="table table-striped display responsive nowrap" id="CategoriesDatatable">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th data-sortable="false">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a href="@Url.Action("AddOrEdit","ProductCategory",new { id = item.Id})" class="btn btn-outline-dark"><i class="fas fa-edit"></i></a>
+                    <a onclick="Delete('@item.Id')" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<!-- END Product Category List Table-->
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#CategoriesDatatable').DataTable({
+            responsive: true,
+        });
+
+        //Show Success Or Error Message After Performing Any Action => Edit/Delete/Add
+        var successMessage = '@TempData["SuccessMessage"]'
+        if (successMessage != '') {
+            alertify.success(successMessage);
+            successMessage = null;
+        }
+        var errorMessage = '@TempData["ErrorMessage"]'
+        if (errorMessage != '') {
+            alertify.alert(errorMessage);
+            errorMessage = null;
+        }
+    });
+
+    //Delete Function
+    //Shows Alert first
+    //If clicks Ok=> Delete that Category
+     function Delete(id) {
+            var categories = @Html.Raw(JsonConvert.SerializeObject(this.Model));
+            var item;
+
+            for (var i = 0; i < categories.length; i++) {
+                if (categories[i].Id == id) {
+                    item = categories[i];
+                    break;
+                }
+            }
+
+            alertify.confirm('Product Management', 'Are You Sure To Delete ' + item.Name + ' Category?',
+                function () {
+                    window.location.href = '@Url.Action("Delete","ProductCategory")/' + id;
+                }, null
+            );
+      }
+    </script>
+}

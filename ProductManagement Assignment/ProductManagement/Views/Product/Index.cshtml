@@ -1,0 +1,289 @@
+﻿@model IEnumerable<ProductManagement.Models.MvcProductModel>
+@using Newtonsoft.Json
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Products</h2>
+
+<!-- Shows Add Product ,Add Product Category Button-->
+<p>
+    <a href="@Url.Action("AddOrEdit","Product")" class="btn btn-outline-primary"><i class="far fa-plus"></i> Add Product</a>
+    <a href="@Url.Action("AddOrEdit","ProductCategory")" class="btn btn-outline-primary"><i class="far fa-plus"></i> Add Product Category</a>
+</p>
+
+<!--Shows Input Field For Sorting Products Between Min Max Price -->
+<span>Sort Products between Price</span>
+<table style="margin-bottom:10px;" data-search-align="center">
+    <thead>
+        <tr>
+            <td style="padding-right:15px;">
+                Minimum Price:
+            </td>
+            <td>
+                Maximum Price:
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="padding-right:15px;">
+                <input type="number" id="min" name="min" class="form-control" />
+            </td>
+            <td>
+                <input type="number" id="max" name="max" class="form-control" />
+
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- BEGIN Product List Table-->
+<table class="table table-striped display responsive nowrap" id="Datatable">
+    <thead class="thead-light">
+        <tr>
+            <th class="details-control" data-sortable="false"></th>
+
+            <th data-sortable="false">
+                <input type="checkbox" name="CheckAll" id="CheckAll" />
+            </th>
+            <th>No.</th>
+            <th data-sortable="false">
+                @Html.DisplayNameFor(model => model.SmallImageFile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShortDescription)
+            </th>
+            <th data-sortable="false">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            var item = Model.ElementAt(i);
+
+            @*@foreach (var item in Model)
+                {*@
+            <tr>
+                <td class="details-control" onclick="showData(@item.Id,this)"></td>
+
+                <td>
+                    <input class="selectedItems" type="checkbox" name="ids" id="ids" value="@item.Id" />
+                </td>
+                <td> @(i+1) </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.SmallImageFile)*@
+                    <img src="@Url.Content(item.SmallImage)" alt="@item.Name" style="height: 100px; width: 100px;border: 2px solid #337ab7;  border-radius: 8px" />
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.CategoryId)*@
+                    @foreach (var category in ViewBag.ProductCategories)
+                    {
+                        if (category.Id == item.CategoryId)
+                        {
+                            @category.Name;
+                            break;
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShortDescription)
+                </td>
+
+                <td>
+                    <a href="@Url.Action("AddOrEdit","Product",new { id = item.Id})" class="btn btn-outline-dark"><i class="fas fa-edit"></i></a>
+                    <a onclick="Delete(@item.Id,'@item.Name')" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<!-- END Product List Table-->
+<!--Shows Delete Function For Selected Products-->
+<a onclick="multipleDelete()" class="btn btn-danger" id="multiDeleteBtn" style="position:sticky;bottom:30px;" hidden>Delete Selected</a>
+
+@section scripts{
+    <script type="text/javascript">
+        var datatable;
+        var products = @Html.Raw(JsonConvert.SerializeObject(this.Model));
+
+        //Initializing DataTable Of Products List
+        $(document).ready(function () {
+            datatable = $('#Datatable').DataTable({
+                responsive: true,
+                "order": [[2, "asc"]]
+            });
+
+            //Key Event Listener For Min And Max Price
+            $('#min, #max').keyup(function () {
+                datatable.draw();
+            });
+
+            //Shows Success OR Error Message
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '') {
+                alertify.success(successMessage);
+                successMessage = null;
+            }
+
+            var errorMessage = '@TempData["ErrorMessage"]'
+            if (errorMessage != '') {
+                alertify.alert(errorMessage);
+                errorMessage = null;
+            }
+
+            //Check/Uncheck All CheckBoxes Based On CheckAll Value
+            $("#CheckAll").click(function () {
+                $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+            });
+
+            $("input[type=checkbox]").click(function () {
+                if (!$(this).prop('checked')) {
+                    $("#CheckAll").prop('checked', false);
+                }
+            });
+            $('input[type=checkbox]').change(function () {
+                if ($('input[type=checkbox]:checked').length > 0 && @Model.Count() >0)  {
+                    $('#multiDeleteBtn').attr('hidden', false);
+                } else {
+                    $('#multiDeleteBtn').attr('hidden', true);
+                }
+            })
+        });
+
+        //Function For Deleting Single Product
+        function Delete(id,name) {
+            alertify.confirm('Product Management', 'Are You Sure To Delete '+name+' Product?',
+                function () {
+                window.location.href = '@Url.Action("Delete","Product")/' + id;
+                },null
+            );
+        }
+
+        //Function For Deleting Multiple Products
+        function multipleDelete() {
+            var ids = []
+            var checkboxes = $('.selectedItems:checkbox:checked')
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                ids.push(checkboxes[i].value)
+            }
+
+            if (ids.length == 1) {
+               var item;
+
+                for (var i = 0; i < products.length; i++) {
+                    if (products[i].Id == ids[0]) {
+                        item = products[i];
+                        break;
+                    }
+                }
+
+                Delete(ids[0], item.Name);
+                return;
+            }
+
+            console.log(ids);
+
+             alertify.confirm('Product Management', 'Are You Sure To Delete Multiple Products?',
+                function () {
+                     $.ajax({
+                        type: "Post",
+                        url:  "@Url.Action("DeleteMultiple","Product")",
+                        traditional: true,
+                         data: { 'ids': ids },
+                         success: function (result) {
+                             window.location.href = '@Url.Action("Index","Product")';
+                         },
+                         error: function (error) {
+                             alertify.error("Something Went Wrong!");
+                         }
+                    });
+                },null
+            );
+        }
+
+        //Function To Sort Products Between Price
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                var min = parseInt($('#min').val(), 10);
+                var max = parseInt($('#max').val(), 10);
+                var price = parseFloat(data[6]) ;
+
+                if ((isNaN(min) && isNaN(max)) ||
+                    (isNaN(min) & price <= max) ||
+                    (min <= price && isNaN(max)) ||
+                    (min <= price && price <= max)) {
+                    return true;
+                }
+                return false;
+            }
+        );
+
+        //Function To Expand Clicked Row And Show Details Returned From formate Function
+        function showData(itemId, row) {
+            let item;
+            for (var i = 0; i < products.length; i++) {
+                if (products[i].Id == itemId) {
+                    item = products[i];
+                    break;
+                }
+            }
+
+            var tr = $(row).closest('tr');
+            var row = datatable.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                row.child(format(item)).show();
+                tr.addClass('shown');
+            }
+        }
+
+        //Returns The Row of Clicked Item(Quantity,LongDescription,LargeImage)
+        function format(d) {
+            var img2;
+            if (d.LargeImage != null) {
+                var img1 = d.LargeImage.replace('~', '');
+                img2 = img1.replace("/Large_Images", '/Large_Images/');
+            } else {
+                img2=null
+            }
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                '<tr>' +
+                '<td>Quantity:</td>' +
+                '<td>Long Description:</td>' +
+                '<td>Large Image:</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td>' + d.Quantity + '</td>'+
+                '<td>' + (d.LongDescription != null ? d.LongDescription  : '-')+'</td>' +
+                '<td><img ID="Image1" style="height: 100px; width: 100px;border: 2px solid #337ab7;  border-radius: 8px" src="' + (img2 != null ? img2 + '"/></td>' : + '" hidden/></td>') +
+                '</tr>'
+                '</table>';
+            }
+    </script>
+}

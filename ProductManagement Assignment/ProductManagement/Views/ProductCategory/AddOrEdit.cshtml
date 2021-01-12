@@ -1,0 +1,65 @@
+﻿@model ProductManagement.Models.MvcProductCategoryModel
+
+@{
+    ViewBag.Title = "AddOrEdit";
+}
+
+<!--BEGIN Add Product Category-->
+@using (Html.BeginForm("AddOrEdit", "ProductCategory", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Add Product Category</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group" style="margin-top:10px; margin-left:25px">
+            <div>
+                <input type="submit" value="Add" class="btn btn-primary" id="submitBtn" />
+                <input type="button" value="Cancel" class="btn btn-outline-dark" onclick="location.href='@Url.Action("Index")'" />
+            </div>
+        </div>
+    </div>
+}
+<!--END Add Product Category-->
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script type="text/javascript">
+
+        $(document).ready(function () {
+            //Show Success Or Error Message After Performing Any Action => Edit/Delete/Add
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '') {
+                alertify.success(successMessage);
+                successMessage = null;
+            }
+            var errorMessage = '@TempData["ErrorMessage"]'
+            if (errorMessage != '') {
+                alertify.alert(errorMessage);
+                errorMessage = null;
+            }
+        })
+
+        //  Function To Change Submit Button Value
+        //Based On Id: if Id is 0 => Add else Update
+        $(document).ready(function () {
+            if (@Model.Id == 0) {
+                $("#submitBtn").val ( "Add");
+            } else {
+                $("#submitBtn").val ( "Update");
+            }
+        })
+</script>
+}

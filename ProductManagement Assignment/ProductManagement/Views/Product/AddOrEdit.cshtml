@@ -1,0 +1,203 @@
+﻿@model ProductManagement.Models.MvcProductModel
+
+@{
+    ViewBag.Title = "AddOrEdit";
+}
+
+@using (Html.BeginForm("AddOrEdit", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Add New Product</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @*@Html.EditorFor(model => model.Category, new { htmlAttributes = new { @class = "form-control" } })*@
+                        <select name="CategoryId" id="CategoryId" class="form-control">
+                            <option value="0" selected>Choose Category</option>
+                            @foreach (var category in ViewBag.ProductCategories)
+                            {
+                                <option value=@category.Id>@category.Name</option>
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @*@Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })*@
+                        <select name="Quantity" id="Quantity" class="form-control">
+                            <option value="0" selected>Select Quantity</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.TextAreaFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" }, @cols = "40", @rows = "3" })
+                        @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LongDescription, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.TextAreaFor(model => model.LongDescription, new { htmlAttributes = new { @class = "form-control" }, @cols = "40", @rows = "3" })
+                        @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class=" col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SmallImageFile, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.SmallImageFile, new { htmlAttributes = new { @class = "form-control-file" }, @type = "file", @name = "SmallImageFile", @Id = "SmallImageFile", @accept = "image/x-png,image/jpg,image/jpeg", @onChange = "ShowImagePreview(this,document.getElementById('SmallImagePreview'))" })
+                        @Html.ValidationMessageFor(model => model.SmallImageFile, "", new { @class = "text-danger" })
+                        <span id="SmallImageError" class="text-danger"></span>
+                        <img style="margin:10px; height:200px; width: 200px;border:2px solid #337ab7;border-radius:8px" id="SmallImagePreview" hidden />
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LargeImageFile, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.LargeImageFile, new { htmlAttributes = new { @class = "form-control-file" }, @type = "file", @name = "LargeImageFile", @Id = "LargeImageFile", @accept = "image/x-png,image/jpg,image/jpeg", @onChange = "ShowImagePreview(this,document.getElementById('LargeImagePreview'))" })
+                        @Html.ValidationMessageFor(model => model.LargeImageFile, "", new { @class = "text-danger" })
+                        <span id="LargeImageError" class="text-danger"></span>
+                        <img style="margin:10px; height:200px; width: 200px;border:2px solid #337ab7;border-radius:8px" id="LargeImagePreview" hidden />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-top:10px;">
+            <div class="text-center">
+                <input type="submit" value="Add" class="btn btn-primary" id="submitBtn" />
+                <input type="button" value="Cancel" class="btn btn-outline-dark" onclick="location.href='@Url.Action("Index")'" />
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script>
+        $(document).ready(function () {
+
+            @{
+                string smallImage,largeImage;
+                if(Model.SmallImage != null)
+                {
+                    smallImage = Url.Content(Model.SmallImage);
+                }
+                else
+                {
+                    smallImage = "";
+                }
+                if(Model.LargeImage  != null)
+                {
+                    largeImage = Url.Content(Model.LargeImage);
+                }
+                else
+                {
+                    largeImage = "";
+                }
+            }
+
+            if (@Model.Id == 0) {
+                $("#submitBtn").val ( "Add");
+            } else {
+                $("#submitBtn").val ( "Update");
+            }
+
+             var id = @Model.CategoryId;
+            if (id !== 0) {
+                $('#CategoryId').val(id);
+            }
+
+            var quantity = @Model.Quantity;
+            if (quantity !== 0) {
+                $('#Quantity').val(quantity);
+            }
+
+            showImage('@Model.SmallImage',true, document.getElementById('SmallImagePreview'));
+            showImage('@Model.LargeImage',false, document.getElementById('LargeImagePreview'));
+
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '') {
+                alertify.success(successMessage);
+                successMessage = null;
+            }
+
+            var errorMessage = '@TempData["ErrorMessage"]'
+            if (errorMessage != '') {
+                alertify.alert(errorMessage);
+                errorMessage = null;
+            }
+        });
+
+        function showImage(imgPath,isSmallImg, imgTag) {
+            if (imgPath === null || imgPath === '') {
+                $(imgTag).attr("hidden", true);
+            } else {
+                if (isSmallImg) {
+                    $(imgTag).attr('src', '@smallImage');
+                } else {
+                    $(imgTag).attr('src', '@largeImage');
+                }
+                $(imgTag).attr("hidden", false);
+            }
+        }
+</script>
+}

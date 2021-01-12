@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c7f620c5c7bc447f9c9a9a3338b00883" Name="Diagram1">
+        <EntityTypeShape EntityType="DbProductManagementModel.ProductCategory" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbProductManagementModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="DbProductManagementModel.FK_Products_ProductCategories" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DbProductManagementModel.User" Width="1.5" PointX="0.75" PointY="4.75" />
+        <AssociationConnector Association="DbProductManagementModel.FK_Products_Users_CreatedBy" />
+        <AssociationConnector Association="DbProductManagementModel.FK_Products_Users_ModifiedBy" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
