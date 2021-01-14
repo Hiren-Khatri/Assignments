@@ -1,0 +1,271 @@
+{
+	"variables": [],
+	"info": {
+		"name": "WebApiFinalAssignmentRequestsCollection",
+		"_postman_id": "11901df5-7bd7-f4ce-814c-b3d76bae4e26",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://localhost:44304/api/CreateHotel",
+			"request": {
+				"url": "https://localhost:44304/api/CreateHotel",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"HotelName\":\"Hotel2\",\n\t\"City\":\"Idar\",\n\t\"Pincode\":383430,\n\t\"ContactNumber\":9112345678,\n\t\"ContactPerson\":\"Mr.Abc\",\n\t\"Website\":\"www.hotel1.in\",\n\t\"IsActive\":true,\n\t\"CreatedBy\":\"Admin\",\n\t\"Rooms\":[\n\t\t{\n\t\t\t\"RoomName\":\"room1\",\n\t\t\t\"RoomPrice\":5000,\n\t\t\t\"IsActive\":0,\n\t\t\t\"CreatedBy\":\"admin\",\n\t\t\t\"RoomCategory\":1\n\t\t}\n\t]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44304/api/Hotels",
+			"request": {
+				"url": "https://localhost:44304/api/Hotels",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44304/api/Hotels/1",
+			"request": {
+				"url": "https://localhost:44304/api/Hotels/1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44304/api/CreateRoom",
+			"request": {
+				"url": "https://localhost:44304/api/CreateRoom",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"HotelId\":1,\n\t\"RoomName\":\"Room2\",\n\t\"RoomCategory\":2,\n\t\"RoomPrice\":14999,\n\t\"IsActive\":1,\n\t\"CreatedBy\":\"Admin\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44304/api/Rooms",
+			"request": {
+				"url": "https://localhost:44304/api/Rooms",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44304/api/Rooms?City=Idar",
+			"request": {
+				"url": {
+					"raw": "https://localhost:44304/api/Rooms?City=Idar",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44304",
+					"path": [
+						"api",
+						"Rooms"
+					],
+					"query": [
+						{
+							"key": "City",
+							"value": "Idar",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44304/api/Rooms/1?Date=2021-1-13",
+			"request": {
+				"url": {
+					"raw": "https://localhost:44304/api/Rooms/1?Date=2021-1-14",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44304",
+					"path": [
+						"api",
+						"Rooms",
+						"1"
+					],
+					"query": [
+						{
+							"key": "Date",
+							"value": "2021-1-14",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44304/api/CreateBooking",
+			"request": {
+				"url": "https://localhost:44304/api/CreateBooking",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"BookingDate\":\"1/14/2021\",\n\t\"RoomId\":1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44304/api/Bookings",
+			"request": {
+				"url": "https://localhost:44304/api/Bookings",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44304/api/Bookings/",
+			"request": {
+				"url": "https://localhost:44304/api/Bookings/",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Id\":5,\n\t\"BookingDate\":\"1/14/2021\",\n\t\"Status\":1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:44304/api/Bookings/5",
+			"request": {
+				"url": "https://localhost:44304/api/Bookings/5",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

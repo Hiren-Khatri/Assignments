@@ -1,0 +1,6 @@
+C:\Users\KHATRI\Desktop\Test\Web Api Final Assignment\HMS.Models\bin\Debug\HMS.Models.dll
+C:\Users\KHATRI\Desktop\Test\Web Api Final Assignment\HMS.Models\bin\Debug\HMS.Models.pdb
+C:\Users\KHATRI\Desktop\Test\Web Api Final Assignment\HMS.Models\obj\Debug\HMS.Models.csproj.CoreCompileInputs.cache
+C:\Users\KHATRI\Desktop\Test\Web Api Final Assignment\HMS.Models\obj\Debug\HMS.Models.dll
+C:\Users\KHATRI\Desktop\Test\Web Api Final Assignment\HMS.Models\obj\Debug\HMS.Models.pdb
+C:\Users\KHATRI\Desktop\Test\Web Api Final Assignment\HMS.Models\obj\Debug\HMS.Models.csprojAssemblyReference.cache
